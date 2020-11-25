@@ -1,0 +1,18 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nginx-pvc-pod
+spec:
+  volumes:
+    - name: unity-volume
+      persistentVolumeClaim:
+       claimName: pvc-unity
+  containers:
+    - name: nginx-pvc-pod
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/export/nginx"
+          name: unity-volume

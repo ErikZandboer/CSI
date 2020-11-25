@@ -1,0 +1,18 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nginx-pvc-snapped-pod
+spec:
+  volumes:
+    - name: unity-snapped-volume
+      persistentVolumeClaim:
+       claimName: pvc-from-snap
+  containers:
+    - name: nginx-pvc-snapped-pod
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/export/nginx"
+          name: unity-snapped-volume

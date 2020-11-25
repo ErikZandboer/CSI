@@ -1,0 +1,64 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nginx-pvc-nfs-pod1
+  labels:
+    app: nginx
+spec:
+  volumes:
+    - name: unity-volume
+      persistentVolumeClaim:
+       claimName: pvc-unity-nfs
+  containers:
+    - name: nginx-pvc-nfs-pod1
+      image: nginxdemos/hello
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/export/nginx"
+          name: unity-volume
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nginx-pvc-nfs-pod2
+  labels:
+    app: nginx
+spec:
+  volumes:
+    - name: unity-volume
+      persistentVolumeClaim:
+       claimName: pvc-unity-nfs
+  containers:
+    - name: nginx-pvc-nfs-pod2
+      image: nginxdemos/hello
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/export/nginx"
+          name: unity-volume
+
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nginx-pvc-nfs-pod3
+  labels:
+    app: nginx
+spec:
+  volumes:
+    - name: unity-volume
+      persistentVolumeClaim:
+       claimName: pvc-unity-nfs
+  containers:
+    - name: nginx-pvc-nfs-pod3
+      image: nginxdemos/hello
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/export/nginx"
+          name: unity-volume
+

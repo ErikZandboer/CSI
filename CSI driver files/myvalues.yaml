@@ -1,0 +1,74 @@
+# Represents number of certificate secrets, which user is going to create for ssl authentication. (unity-cert-0..unity-cert-n)
+# Minimum value should be 1
+certSecretCount: 1
+
+# Time interval to add node info to array. Default 15 minutes. Minimum value should be 1.
+#  If your specifies 0, then time is set to default value.
+syncNodeInfoInterval: 15
+
+# "volumeNamePrefix" defines a string prepended to each volume created by the CSI driver.
+volumeNamePrefix: csivol
+
+# "snapNamePrefix" defines a string prepended to each snapshot registered by the CSI driver.
+snapNamePrefix: csi-snap
+
+# To set the debug log policy for CSI driver
+csiDebug: "false"
+
+# The default pull policy is IfNotPresent which causes the Kubelet to skip pulling an image
+# if it already exists. If you would like to always force a pull, use "Always"
+imagePullPolicy: IfNotPresent
+
+# The installation process will generate multiple storageclasses based on "arrayIDList" parameter.
+# Only the primary storageclass for the driver will be marked default if specified.
+# The following are default values for storageclass parameters if user does not specify in "arrayIDList"
+storageClass:
+  # To set File system type. Possible values are ext3,ext4,xfs. Default value is ext4
+  FsType: "ext4"
+  #	To set volume thinProvisioned. Default value is true
+  thinProvisioned: "true"
+  # To set volume data reduction. Default value is false
+  isDataReductionEnabled: "false"
+  # To set volume tiering policy. Default 0
+  tieringPolicy: "0"
+  # To set unity host IO limit
+  hostIOLimitName: ""
+  # NAS server for filesystem (NFS).  Provide the CLI ID of Nas Server present in Unity
+  nasServer: ""
+  # hostIoSize for filesystem (NFS). Default value is 8192
+  hostIoSize: "8192"
+  # "storageClass.reclaimPolicy" defines what will happen when a volume is
+  # removed from the Kubernetes API. Valid values are "Retain" and "Delete".
+  reclaimPolicy: Delete
+  # To handle the existing volumes created in csi-unity v1.0, 1.1 and 1.1.0.1.
+  # The user needs to provide "isDefaultArray": true in secret.json. This entry should be present only for one array and that array will be marked for existing volumes.
+  isDefaultArray: "false"
+# The installation process will generate snapshotClasses based on these parameters.
+snapshotClass:
+  #To set snapshot retention duration. Format:"1:23:52:50" (number of days:hours:minutes:sec)
+  retentionDuration: ""
+
+# The installation process will generate multiple storageclasses based on these parameters.
+# Only the primary storageclass for the driver will be marked default if specified.
+storageArrayList:
+  - name: "VIRT2040ZZQLJS"
+    isDefaultArray: "false"
+    storageClass:
+      storagePool: pool_1
+      FsType: "ext4"
+      thinProvisioned: "true"
+      isDataReductionEnabled: "false"
+      tieringPolicy: "0"
+      hostIOLimitName: ""
+      nasServer: "nas_1"
+      reclaimPolicy: Delete
+    snapshotClass:
+      retentionDuration: ""
+
+#To set different protocols based on which different default storage classes would be generated during driver installation.
+storageClassProtocols:
+  - protocol: "FC"
+  - protocol: "NFS"
+  - protocol: "iSCSI"
+
+
